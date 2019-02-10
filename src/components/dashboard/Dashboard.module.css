@@ -1,0 +1,31 @@
+.dashboard {
+    margin-top: 5em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.discriminator {
+    font-weight: 300;
+    color: #c9c9c9;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.user {
+    background-color: #23272A;
+    padding: 10px 0;
+    width: 40em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.avatar {
+    border-radius: 50%;
+}

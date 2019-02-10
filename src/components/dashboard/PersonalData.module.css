@@ -1,0 +1,45 @@
+.personalData {
+    margin-top: 5px;
+    color: #cbcbcb;
+    padding: 10px;
+}
+
+.data {
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.data tbody td {
+    border-bottom: 1px solid #cbcbcb;
+}
+
+.data tbody tr:last-child > td {
+    border: none;
+}
+
+.userSwitch {
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.1s color;
+}
+
+.userSwitch:hover {
+    color: #cbcbcb;
+}
+
+.deleteAcc {
+    margin-top: 10px;
+    background-color: #ed5e68;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    font-size: 16px;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: 0.1s background-color;
+}
+
+.deleteAcc:hover {
+    background-color: #d95e68;
+}

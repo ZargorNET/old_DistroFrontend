@@ -1,0 +1,24 @@
+.info {
+    margin-top: 10em;
+    text-align: center;
+}
+
+.info p {
+    color: #cbcbcb;
+}
+
+.addToDc {
+    margin-top: 30px;
+    border: none;
+    color: white;
+    background-color: #7289DA;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 2px;
+}
+
+.addToDc:hover {
+    background-color: #687ecf;
+}
