@@ -1,6 +1,6 @@
 import React from "react";
 import Authentication from "../services/Authentication";
-import App from "../index.js";
+import App from "../index";
 
 export default class DiscordCallback extends React.Component {
     componentWillMount() {

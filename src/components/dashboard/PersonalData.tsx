@@ -1,10 +1,14 @@
 import React from "react";
-import App from "../../index";
+import App from "../..";
 import styles from "./PersonalData.module.css";
 
-export default class PersonalData extends React.Component {
+interface IPersonDataState {
+    personalDataShown: boolean
+}
 
-    constructor(props) {
+export default class PersonalData extends React.Component<any, IPersonDataState> {
+
+    constructor(props: any) {
         super(props);
         this.state = {
             personalDataShown: false
@@ -13,6 +17,8 @@ export default class PersonalData extends React.Component {
 
     togglePersonalData = () => {
         let toggler = document.getElementById("personalDataToggler");
+        if (toggler == null)
+            return;
         if (this.state.personalDataShown) {
             toggler.classList.remove("fa-angle-up");
             toggler.classList.add("fa-angle-down")
@@ -30,22 +36,26 @@ export default class PersonalData extends React.Component {
     };
 
     render() {
+        if (App.instance.state.localUser == null) {
+            console.error("Tried to render PersonalData component with a null user!");
+            return false;
+        }
         const data = <tbody>
         <tr>
             <td>ID</td>
-            <td>{App.instance.state.user.id}</td>
+            <td>{App.instance.state.localUser.id}</td>
         </tr>
         <tr>
             <td>DiscordID</td>
-            <td>{App.instance.state.user.discordId}</td>
+            <td>{App.instance.state.localUser.discordId}</td>
         </tr>
         <tr>
             <td>Username</td>
-            <td>{App.instance.state.user.username.name + "#" + App.instance.state.user.username.discriminator}</td>
+            <td>{App.instance.state.localUser.username.name + "#" + App.instance.state.localUser.username.discriminator}</td>
         </tr>
         <tr>
             <td>E-Mail</td>
-            <td>{App.instance.state.user.email}</td>
+            <td>{App.instance.state.localUser.email}</td>
         </tr>
         </tbody>;
 

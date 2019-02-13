@@ -1,11 +1,21 @@
 import React from "react";
-import styles from './Header.module.css'
-import Authentication from "../services/Authentication";
-import App from "../index.js";
+import App from "../index";
 import history from '../history'
+import {User} from "../services/User";
+import Authentication from "../services/Authentication";
 
+import styles from "./Header.module.css";
 
-class Header extends React.Component {
+interface IHeaderProps {
+    user: User | null
+}
+
+class Header extends React.Component<IHeaderProps, {}> {
+    constructor(props: IHeaderProps) {
+        super(props);
+
+    }
+
     community = () => {
         window.open(App.COMMUNITY_INVITE_LINK, "JoinUs", "width=600,height=800,status=yes")
     };
@@ -19,7 +29,7 @@ class Header extends React.Component {
                         e.preventDefault();
                     }}>Distro</p></h3>
                     <ul className={styles.nav}>
-                        {this.props.user.id != null ? (
+                        {this.props.user != null ? (
                             <li><p onClick={(e) => {
                                 history.push("/dashboard");
                                 e.preventDefault();
@@ -38,7 +48,7 @@ class Header extends React.Component {
                             e.preventDefault();
                         }}>Community</p></li>
                         <li><p className={styles.fade}>Blog</p></li>
-                        {this.props.user.id != null &&
+                        {this.props.user != null &&
                         <li><p onClick={(e) => {
                             Authentication.logout();
                             e.preventDefault();

@@ -1,6 +1,7 @@
 import React from "react";
-import styles from './IndexSite.module.css'
 import Authentication from "../services/Authentication";
+
+import styles from "./IndexSite.module.css";
 
 class IndexSite extends React.Component {
     render() {
