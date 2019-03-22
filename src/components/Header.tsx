@@ -1,23 +1,30 @@
 import React from "react";
 import App from "../index";
-import history from '../history'
-import {User} from "../services/User";
-import Authentication from "../services/Authentication";
-
 import styles from "./Header.module.css";
+import {LocalUser} from "../models/User.model";
+import {Services} from "../services/Service";
 
 interface IHeaderProps {
-    user: User | null
+    user: LocalUser | null
 }
 
 class Header extends React.Component<IHeaderProps, {}> {
     constructor(props: IHeaderProps) {
         super(props);
-
     }
 
     community = () => {
         window.open(App.COMMUNITY_INVITE_LINK, "JoinUs", "width=600,height=800,status=yes")
+    };
+
+    logout = () => {
+        Services.AUTHENTICATION_SERVICE.logout();
+
+        App.instance.setState({
+            localUser: null,
+            jwtToken: null
+        });
+        App.redirect("/");
     };
 
     render() {
@@ -25,22 +32,22 @@ class Header extends React.Component<IHeaderProps, {}> {
             <header className={styles.header}>
                 <div className={styles.nav}>
                     <h3 className={styles.logo}><p onClick={(e) => {
-                        history.push("/");
+                        App.redirect("/");
                         e.preventDefault();
                     }}>Distro</p></h3>
                     <ul className={styles.nav}>
                         {this.props.user != null ? (
                             <li><p onClick={(e) => {
-                                history.push("/dashboard");
+                                App.redirect("/dashboard");
                                 e.preventDefault();
                             }} className={styles.fade}>Dashboard</p></li>) : (
                             <li><p onClick={(e) => {
-                                Authentication.login();
+                                Services.AUTHENTICATION_SERVICE.startLoginProcess();
                                 e.preventDefault();
                             }}>Login</p></li>
                         )}
                         <li><p onClick={(e) => {
-                            history.push("/features");
+                            App.redirect("/features");
                             e.preventDefault();
                         }} className={styles.fade}>Features</p></li>
                         <li><p className={styles.fade} onClick={(e) => {
@@ -50,7 +57,7 @@ class Header extends React.Component<IHeaderProps, {}> {
                         <li><p className={styles.fade}>Blog</p></li>
                         {this.props.user != null &&
                         <li><p onClick={(e) => {
-                            Authentication.logout();
+                            this.logout();
                             e.preventDefault();
                         }}>Logout</p></li>
                         }

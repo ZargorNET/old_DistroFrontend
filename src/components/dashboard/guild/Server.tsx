@@ -3,8 +3,8 @@ import styles from "./Server.module.css";
 import ServerSelector from "./ServerSelector";
 
 export default class Server extends React.Component {
-    serverSelectUpdate = (server) => {
-        alert("dwwd")
+    serverSelectUpdate = () => {
+
     };
 
     render() {

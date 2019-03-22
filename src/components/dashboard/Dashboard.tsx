@@ -1,9 +1,10 @@
 import React from "react";
-import Authentication from "../../services/Authentication";
 import PersonalData from "./PersonalData";
 import App from "../../index";
 
 import styles from "./Dashboard.module.css";
+import Server from "./guild/Server";
+import {Services} from "../../services/Service";
 
 export default class Dashboard extends React.Component {
     constructor(props: any) {
@@ -11,8 +12,17 @@ export default class Dashboard extends React.Component {
     }
 
     async componentWillMount() {
-        if (!await Authentication.isAuthenticatedAndSetStateIfSo())
-            Authentication.login();
+        if (App.instance.state.localUser == null) {
+            Services.AUTHENTICATION_SERVICE.tryToGetUserViaCookie().then(user => {
+                if (user == null) {
+                    Services.AUTHENTICATION_SERVICE.startLoginProcess();
+                    return;
+                }
+                App.instance.setState({
+                    localUser: user
+                })
+            });
+        }
     }
 
     render() {
@@ -28,7 +38,7 @@ export default class Dashboard extends React.Component {
                     </h3>
                     <PersonalData/>
                 </div>
-                {/*<Server/>*/}
+                <Server/>
             </div>
         )
     }
