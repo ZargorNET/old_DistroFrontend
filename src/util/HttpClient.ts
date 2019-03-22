@@ -4,7 +4,7 @@ export class HttpClient {
     private readonly _axios: AxiosInstance;
     private lastExecuteTime: number = 0;
 
-    constructor(endpoint: string, timeout: number = 10000, rateLimitInterval: number = 1000) {
+    constructor(endpoint: string, timeout: number = 10000, rateLimitInterval: number = 1100) {
         this._axios = axios.create({
             baseURL: endpoint,
             timeout: timeout

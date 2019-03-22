@@ -10,8 +10,8 @@ class IndexSite extends React.Component {
                 <h1>It's time to simplify your life.</h1>
                 <p>All-in-one bot for moderation and memes that's fully configurable in a pretty web interface.</p>
                 <p>What are you waiting for? Let's begin to add the bot to your server!</p>
-                <button className={styles.addToDc} onClick={Services.AUTHENTICATION_SERVICE.startLoginProcess}><i
-                    className="fab fa-discord"/> Add to
+                <button className={styles.addToDc} onClick={() => Services.AUTHENTICATION_SERVICE.startLoginProcess()}>
+                    <i className="fab fa-discord"/> Add to
                     Discord
                 </button>
             </div>

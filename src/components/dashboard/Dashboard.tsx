@@ -11,22 +11,31 @@ export default class Dashboard extends React.Component {
         super(props);
     }
 
-    async componentWillMount() {
+    componentWillMount() {
         if (App.instance.state.localUser == null) {
             Services.AUTHENTICATION_SERVICE.tryToGetUserViaCookie().then(user => {
                 if (user == null) {
                     Services.AUTHENTICATION_SERVICE.startLoginProcess();
                     return;
                 }
+
                 App.instance.setState({
                     localUser: user
-                })
+                });
+            });
+        }
+
+        if (App.instance.state.guilds == null) {
+            Services.GUILD_SERVICE.getAll().then(guilds => {
+                App.instance.setState({
+                    guilds: guilds
+                });
             });
         }
     }
 
     render() {
-        if (App.instance.state.localUser == null)
+        if (App.instance.state.localUser == null || App.instance.state.guilds == null)
             return false;
 
         return (

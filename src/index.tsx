@@ -14,12 +14,14 @@ import {HttpClient} from "./util/HttpClient";
 import {LocalUser} from "./models/User.model";
 import {Jwt} from "./models/Jwt.model";
 import {Services} from "./services/Service";
+import {Guild} from "./models/Guild.model";
 
 interface IAppState {
     loaded: boolean,
     showHeader: boolean,
     localUser: LocalUser | null,
-    jwtToken: Jwt | null
+    jwtToken: Jwt | null,
+    guilds: Guild[] | null
 }
 
 export default class App extends React.Component<{}, IAppState> {
@@ -32,7 +34,8 @@ export default class App extends React.Component<{}, IAppState> {
             loaded: false,
             showHeader: true,
             localUser: null,
-            jwtToken: null
+            jwtToken: null,
+            guilds: null
         }
     }
 
@@ -51,7 +54,7 @@ export default class App extends React.Component<{}, IAppState> {
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<IAppState>, snapshot?: any): void {
-        this.setDistroApiAuthorizationHeader();
+        this.setDistroApiAuthorizationHeaderViaState();
     }
 
     render() {
@@ -88,9 +91,13 @@ export default class App extends React.Component<{}, IAppState> {
         history.push(to);
     }
 
-    private setDistroApiAuthorizationHeader() {
+    public setDistroApiAuthorizationHeader(jwt: Jwt) {
+        App.DISTRO_API_CLIENT.axios.defaults.headers.common['Authorization'] = `Bearer ${jwt.key}`
+    }
+
+    private setDistroApiAuthorizationHeaderViaState() {
         if (this.state.jwtToken != null)
-            App.DISTRO_API_CLIENT.axios.defaults.headers.common['Authorization'] = `Bearer ${this.state.jwtToken.key}`
+            this.setDistroApiAuthorizationHeader(this.state.jwtToken)
     }
 }
 

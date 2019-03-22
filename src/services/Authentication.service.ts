@@ -39,11 +39,11 @@ export class AuthenticationService {
             throw "invalid cookie format"
         }
 
-        return new Jwt(cookieSplit[0], new Date(cookieSplit[1]));
+        return new Jwt(cookieSplit[0], new Date(Number(cookieSplit[1])));
     }
 
     public saveJwtTokenToCookie(jwt: Jwt) {
-        document.cookie = `s-token=${jwt.key}||${jwt.expiresAt.getDate()};Path=/${App.HTTPS ? ";secure" : ""}`;
+        document.cookie = `s-token=${jwt.key}||${jwt.expiresAt.getTime()};Path=/${App.HTTPS ? ";secure" : ""}`;
     }
 
     public async tryToGetUserViaCookie(): Promise<LocalUser | null> {
@@ -54,9 +54,11 @@ export class AuthenticationService {
         if (jwt == null)
             return null;
 
-        App.instance.setState({
+        await App.instance.setState({
             jwtToken: jwt
         });
+
+        App.instance.setDistroApiAuthorizationHeader(jwt);
 
         return await Services.USER_SERVICE.getLocalUser()
     }

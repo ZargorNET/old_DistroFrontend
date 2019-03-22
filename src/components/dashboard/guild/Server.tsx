@@ -3,14 +3,10 @@ import styles from "./Server.module.css";
 import ServerSelector from "./ServerSelector";
 
 export default class Server extends React.Component {
-    serverSelectUpdate = () => {
-
-    };
-
     render() {
         return (
             <div className={styles.servers}>
-                <ServerSelector servers={["a", "b", "c", "w"]} updateMethod={this.serverSelectUpdate}/>
+                <ServerSelector/>
             </div>
         )
     }
