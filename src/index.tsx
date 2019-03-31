@@ -15,6 +15,7 @@ import {LocalUser} from "./models/User.model";
 import {Jwt} from "./models/Jwt.model";
 import {Services} from "./services/Service";
 import {Guild} from "./models/Guild.model";
+import Server from "./components/dashboard/guild/Server";
 
 interface IAppState {
     loaded: boolean,
@@ -24,7 +25,7 @@ interface IAppState {
     guilds: Guild[] | null
 }
 
-export default class App extends React.Component<{}, IAppState> {
+export default class App extends React.Component<any, IAppState> {
     constructor(props: any) {
         super(props);
         App.instance = this;
@@ -70,6 +71,7 @@ export default class App extends React.Component<{}, IAppState> {
                     <Switch>
                         <Route path="/" exact component={IndexSite}/>
                         <Route path="/dashboard" component={Dashboard}/>
+                        <Route path="/guild/:id" component={Server}/>
                         <Route path="/callback/discord" exact component={DiscordCallback}/>
                         <Route path="/500" exact component={ErrorPage}/>
                         <Route component={NotFound}/>
@@ -87,8 +89,16 @@ export default class App extends React.Component<{}, IAppState> {
     static COMMUNITY_INVITE_LINK = "https://discord.gg/pBV3685";
     static HTTPS = false;
 
-    public static redirect(to: string) {
+    public redirect(to: string) {
         history.push(to);
+    }
+
+    public redirectTo500() {
+        history.push("/500");
+        App.instance.setState({
+            loaded: true,
+            showHeader: false
+        })
     }
 
     public setDistroApiAuthorizationHeader(jwt: Jwt) {

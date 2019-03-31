@@ -24,7 +24,7 @@ class Header extends React.Component<IHeaderProps, {}> {
             localUser: null,
             jwtToken: null
         });
-        App.redirect("/");
+        App.instance.redirect("/");
     };
 
     render() {
@@ -32,13 +32,13 @@ class Header extends React.Component<IHeaderProps, {}> {
             <header className={styles.header}>
                 <div className={styles.nav}>
                     <h3 className={styles.logo}><p onClick={(e) => {
-                        App.redirect("/");
+                        App.instance.redirect("/");
                         e.preventDefault();
                     }}>Distro</p></h3>
                     <ul className={styles.nav}>
                         {this.props.user != null ? (
                             <li><p onClick={(e) => {
-                                App.redirect("/dashboard");
+                                App.instance.redirect("/dashboard");
                                 e.preventDefault();
                             }} className={styles.fade}>Dashboard</p></li>) : (
                             <li><p onClick={(e) => {
@@ -47,7 +47,7 @@ class Header extends React.Component<IHeaderProps, {}> {
                             }}>Login</p></li>
                         )}
                         <li><p onClick={(e) => {
-                            App.redirect("/features");
+                            App.instance.redirect("/features");
                             e.preventDefault();
                         }} className={styles.fade}>Features</p></li>
                         <li><p className={styles.fade} onClick={(e) => {

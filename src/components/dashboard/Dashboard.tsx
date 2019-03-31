@@ -3,35 +3,19 @@ import PersonalData from "./PersonalData";
 import App from "../../index";
 
 import styles from "./Dashboard.module.css";
-import Server from "./guild/Server";
 import {Services} from "../../services/Service";
+import ServerSelector from "./ServerSelector";
 
-export default class Dashboard extends React.Component {
+export default class Dashboard extends React.Component<any, {}> {
     constructor(props: any) {
         super(props);
     }
 
     componentWillMount() {
-        if (App.instance.state.localUser == null) {
-            Services.AUTHENTICATION_SERVICE.tryToGetUserViaCookie().then(user => {
-                if (user == null) {
-                    Services.AUTHENTICATION_SERVICE.startLoginProcess();
-                    return;
-                }
-
-                App.instance.setState({
-                    localUser: user
-                });
-            });
-        }
-
-        if (App.instance.state.guilds == null) {
-            Services.GUILD_SERVICE.getAll().then(guilds => {
-                App.instance.setState({
-                    guilds: guilds
-                });
-            });
-        }
+        Dashboard.ensureLoggedIn().catch(e => {
+            App.instance.redirectTo500();
+            throw e;
+        });
     }
 
     render() {
@@ -47,8 +31,38 @@ export default class Dashboard extends React.Component {
                     </h3>
                     <PersonalData/>
                 </div>
-                <Server/>
+                <span className={styles.servers}>
+                       <ServerSelector/>
+                </span>
             </div>
         )
+    }
+
+    public static async ensureLoggedIn() {
+        App.instance.setState({
+            loaded: false
+        });
+
+        if (App.instance.state.localUser == null) {
+            App.instance.redirect("/");
+            App.instance.setState({
+                loaded: true
+            });
+            return
+        }
+
+        if (App.instance.state.guilds == null) {
+            await Services.GUILD_SERVICE.getAll().then(guilds => {
+                App.instance.setState({
+                    guilds: guilds
+                });
+            }).catch(e => {
+                throw e;
+            })
+        }
+
+        App.instance.setState({
+            loaded: true
+        });
     }
 }

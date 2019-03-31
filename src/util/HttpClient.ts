@@ -32,6 +32,12 @@ export class HttpClient {
             console.debug(req);
             return req;
         });
+        this._axios.interceptors.response.use(res => {
+            console.debug(`Request to ${res.request.url} responded with:`);
+            console.debug(res);
+
+            return res;
+        });
 
         // ERROR HANDLING
         this._axios.interceptors.response.use(res => res, error => {

@@ -29,3 +29,11 @@ main {
 .avatar {
     border-radius: 50%;
 }
+
+.servers {
+    margin: 10px 0;
+    padding: 10px 0;
+    background-color: #23272A;
+    min-height: 10em;
+    width: 60em;
+}

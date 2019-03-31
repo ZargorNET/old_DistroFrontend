@@ -11,9 +11,11 @@ export default class FullscreenSpinner extends React.Component {
             justifyContent: "center"
         };
         return (
-            <div style={loadingStyle}>
-                <Spinner/>
-            </div>
+            <span>
+             <div style={loadingStyle}>
+                    <Spinner/>
+                </div>
+            </span>
         );
     }
 }

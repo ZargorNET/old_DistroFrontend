@@ -19,7 +19,7 @@ export default class DiscordCallback extends React.Component {
                     localUser: user
                 });
             });
-            App.redirect("/dashboard");
+            App.instance.redirect("/dashboard");
             history.length = 1;
 
             App.instance.setState({
